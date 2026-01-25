@@ -20,7 +20,7 @@ export const useUserTimeline = () => {
   const user = useAuthStore((state) => state.user);
 
   return useQuery({
-    queryKey: ["user-timeline", user?._id],
+    queryKey: ["user-timeline", user?.sub],
     queryFn: getUserTimeline,
     enabled: !!user && user.role === "user", 
     staleTime: 0,

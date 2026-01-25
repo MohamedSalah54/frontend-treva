@@ -7,10 +7,10 @@ export const useTakeTask = () => {
   return useMutation({
     mutationFn: takeTask,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(["tasks"]);
-    },
-    onError: (err: any) => {
+      // queryClient.invalidateQueries(["tasks"]);
 
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
+    onError: (err: any) => {},
   });
 };
