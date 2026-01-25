@@ -41,6 +41,8 @@ interface JWTUser {
 interface AuthState {
   user: JWTUser | null;
   setUser: (user: JWTUser | null) => void;
+  patchUser: (patch: Partial<JWTUser>) => void;
+
   logout: () => void;
   initUserFromCookie: () => void;
 }
@@ -48,6 +50,10 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
 
+  patchUser: (patch) =>
+    set((state) => ({
+      user: state.user ? { ...state.user, ...patch } : (null as any),
+    })),
   setUser: (user) => set({ user }),
 
   logout: () => {

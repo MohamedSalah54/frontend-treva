@@ -12,7 +12,8 @@ export const useUpdateProfile = () => {
     onSuccess: (data: User) => {
       if (data) {
         queryClient.setQueryData(["myProfile"], data);
-        useAuthStore.getState().setUser(data);
+        // useAuthStore.getState().setUser(data);
+        useAuthStore.getState().patchUser(data);
       }
       toast.success("تم تحديث الملف الشخصي بنجاح");
     },
