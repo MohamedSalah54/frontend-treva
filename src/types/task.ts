@@ -30,8 +30,8 @@ export const ADMIN_DECISION_LABELS: Record<AdminDecision, string> = {
   under_review: "قيد المراجعة",
 };
 export const CLIENT_TASK_STATUS_LABELS: Record<ClientTaskStatus, string> = {
-  receive: "استلام",
-  complete: "إنهاء",
+  receive: "قيد التنفيذ",
+  complete: "متكملة",
 };
 
 export const ADMIN_DECISION_COLORS: Record<AdminDecision, string> = {

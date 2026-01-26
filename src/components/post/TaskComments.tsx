@@ -29,8 +29,9 @@ export default function TaskComments({ task, role }: Props) {
 
   // const canComment = role === "client" && task.status === "in_progress";
 
-  const canComment =
-    role === "client" && !["under_review", "completed"].includes(task.status);
+  // const canComment =
+  //   role === "client" && !["under_review", "completed"].includes(task.status);
+  const canComment = role === "client";
 
   const addClientCommentMutation = useAddTaskComment();
   // const uploadImageMutation = useUploadTaskImage();
@@ -359,13 +360,7 @@ export default function TaskComments({ task, role }: Props) {
             </div>
           )}
         </form>
-      ) : (
-        role === "client" && (
-          <p className="text-red-500 text-sm mt-2">
-            لا يمكنك إضافة تعليق على هذه المهمة في الوقت الحالي.
-          </p>
-        )
-      )}
+      ) : null}
     </div>
   );
 }
