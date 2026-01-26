@@ -85,7 +85,7 @@ const Page = ({ params }: { params: Promise<{ taskId: string }> }) => {
             `تم تحديث قرار الادمن إلى: ${adminDecisionText[decision]}`,
           );
         },
-        onError: () => toast.error("Failed to update admin decision"),
+        onError: () => toast.error("فشل في تحديث قرار الأدمن"),
       },
     );
   };
@@ -94,7 +94,7 @@ const Page = ({ params }: { params: Promise<{ taskId: string }> }) => {
     <div className="min-h-screen bg-[#f0f2f5] py-6 px-3">
       <div className="max-w-3xl mx-auto bg-white rounded-xl shadow">
         <UserHeader
-          assignedUserId={task.assignedUserId }
+          assignedUserId={task.assignedUserId}
           createdAt={task.submission?.submittedAt || ""}
         />
 
@@ -143,7 +143,7 @@ const Page = ({ params }: { params: Promise<{ taskId: string }> }) => {
                             }`}
                             onClick={() => handleAdminDecision(decision)}
                           >
-                            {decision.replace("_", " ")}
+                            {adminDecisionText[decision]}
                           </button>
                         ))}
                       </div>

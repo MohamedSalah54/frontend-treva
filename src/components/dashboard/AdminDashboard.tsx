@@ -20,7 +20,7 @@ export default function AdminDashboard() {
   const { data, isLoading } = useAdminStatistics();
 
   if (isLoading) {
-    return <AppLoader text="Loading Dashboard..." />;
+    return <AppLoader text="جاري التحميل..." />;
   }
 
   const dashboardStats = [

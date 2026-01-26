@@ -9,7 +9,7 @@ export const useCreateTask = () => {
     mutationFn: createTask,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["client-timeline"] });
-      toast.success("created successfully")
+      toast.success("تم انشاء حساب جديد بنجاح")
     },
   });
 };

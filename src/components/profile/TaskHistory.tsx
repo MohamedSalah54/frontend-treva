@@ -27,12 +27,7 @@ export default function History({ userId }: HistoryProps) {
   if (isError || !profileUser) {
     return (
       <div className="text-center py-10 text-red-500">
-        <EmptyState
-          icon={<PackageCheck size={56} />}
-          title="Something Went Wrong"
-          actionText="Go To Home"
-          onAction={() => router.push("/")}
-        />
+        <EmptyState icon={<PackageCheck size={56} />} title="لا يوجد سجل" />
       </div>
     );
   }
@@ -91,8 +86,7 @@ export default function History({ userId }: HistoryProps) {
           <div className="text-center text-gray-500 py-10">
             <EmptyState
               icon={<PackageCheck size={56} />}
-              title="الذهاب للصفحة الرئيسية"
-              onAction={() => router.push("/")}
+              title=" لايوجد سجل للأدمن"
             />
           </div>
         )}

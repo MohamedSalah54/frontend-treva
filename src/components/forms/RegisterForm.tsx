@@ -23,7 +23,7 @@ export default function RegisterForm() {
 
   useEffect(() => {
     if (user?.role !== "admin") {
-      toast.error("Only admins can access this page ");
+      toast.error("هذه الصفحة متاحة للأدمن فقط");
       router.push("/");
     }
   }, [user, router]);

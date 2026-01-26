@@ -30,7 +30,7 @@ export default function RootLayout({
             <ReactQueryProvider>
               {loading ? (
                 <div className="flex items-center justify-center h-screen">
-                  <AppLoader text="Loading ..." />
+                  <AppLoader text="جاري التحميل ..." />
                 </div>
               ) : (
                 <>

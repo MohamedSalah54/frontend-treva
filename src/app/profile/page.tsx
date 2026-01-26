@@ -95,16 +95,16 @@ export default function MyProfilePage() {
   if (isLoading)
     return (
       <div className="text-center py-20">
-        <AppLoader text="Loading Profile..." />.
+        <AppLoader text="جاري تحميل الصفحة الشخصية..." />.
       </div>
     );
   if (isError || !data)
     return (
       <EmptyState
         icon={<User size={56} />}
-        title="No Profile Available"
-        description="There is nothing to show"
-        actionText="Go To Home"
+        title="لا يوجد ملف شخصي"
+        description="لا توجد بيانات لعرضها"
+        actionText="العودة إلى الصفحة الرئيسية"
         onAction={() => router.push("/")}
       />
     );

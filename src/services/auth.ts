@@ -39,7 +39,7 @@ export const registerRequest = async (data: RegisterPayload) => {
     const res = await api.post("/auth/create-user", data);
     return res.data;
   } catch (err: any) {
-    const message = err.response?.data?.message || "Registration failed";
+    const message = err.response?.data?.message || "فشل في انشاء حساب جديد";
     throw new Error(message);
   }
 };
