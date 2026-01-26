@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { Mail, Phone, Briefcase, User, MessageCircle } from "lucide-react";
 import { useUpdateProfile } from "@/src/hooks/profile/useUpdateProfile";
+import { whatsappLogo } from "@/src/assets";
+import Image from "next/image";
 
 type UpdateProfilePayload = {
   profileImage?: any;
@@ -117,7 +119,9 @@ export default function ProfileInfo({ data }: ProfileInfoProps) {
       />
 
       <InputRow
-        icon={<MessageCircle />}
+        icon={
+          <Image src={whatsappLogo} alt="WhatsApp" width={18} height={18} />
+        }
         label="WhatsApp Link"
         value={form.whatsappLink || ""}
         placeholder="01******"
@@ -244,9 +248,7 @@ function InputRow({
           onChange={(e) =>
             onChange &&
             onChange(
-              isWhatsapp
-                ? e.target.value.replace(/\D/g, "")
-                : e.target.value
+              isWhatsapp ? e.target.value.replace(/\D/g, "") : e.target.value,
             )
           }
           className={`

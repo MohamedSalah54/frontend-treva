@@ -91,8 +91,7 @@ export default function History({ userId }: HistoryProps) {
           <div className="text-center text-gray-500 py-10">
             <EmptyState
               icon={<PackageCheck size={56} />}
-              title="Something Went Wrong"
-              actionText="Go To Home"
+              title="الذهاب للصفحة الرئيسية"
               onAction={() => router.push("/")}
             />
           </div>

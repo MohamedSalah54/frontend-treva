@@ -38,6 +38,7 @@ export default function TaskStatusActions({ task }: Props) {
     });
 
   const { mutate: takeTask, isPending: isTaking } = useTakeTask();
+
   const { mutate: submitTaskMutate, isPending: isSubmitTaskPending } =
     useSubmitTask({
       taskId: task._id,
@@ -320,10 +321,22 @@ export default function TaskStatusActions({ task }: Props) {
           {task.status === "available" && !userHasTakenTask && (
             <div className="w-full px-4">
               <button
+                // onClick={() => {
+                //   takeTask(task._id, {
+                //     onSuccess: () => {
+                //       setUserHasTakenTask(true);
+                //     },
+                //   });
+                // }}
                 onClick={() => {
                   takeTask(task._id, {
                     onSuccess: () => {
                       setUserHasTakenTask(true);
+                    },
+                    onError: (error: any) => {
+                      toast.error(
+                        "عندك مهمة حالياً، خلصها الأول وبعدين خد مهمة تانية",
+                      );
                     },
                   });
                 }}

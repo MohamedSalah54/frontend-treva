@@ -23,7 +23,6 @@ export interface SubmitTaskDto {
     public_id: string;
     folderId?: string;
   }[];
-  // ...
 }
 
 
