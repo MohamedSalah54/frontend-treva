@@ -52,7 +52,7 @@ export default function UserHeader({
     typeof assignedUserId === "string" ? assignedUserId : assignedUserId._id;
 
   const profileLink =
-    user?.sub === assignedId ? "/profile" : `/profile/${assignedId}`;
+    user?.id === assignedId ? "/profile" : `/profile/${assignedId}`;
 
   return (
     <div className="flex items-center gap-3 p-4">

@@ -5,7 +5,7 @@ import { getAdminTimeline } from "@/src/services/task/task.admin";
 export const useAdminTimeline = () => {
   const user = useAuthStore((state) => state.user);
   return useQuery({
-    queryKey: ["admin-timeline", user?.sub],
+    queryKey: ["admin-timeline", user?.id],
     queryFn: async () => {
       const tasks = await getAdminTimeline();
       return tasks;

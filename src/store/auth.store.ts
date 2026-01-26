@@ -23,9 +23,10 @@
 import { create } from "zustand";
 import { jwtDecode } from "jwt-decode";
 import { Role } from "../types/task";
+import { logoutRequest } from "../services/auth";
 
 interface JWTUser {
-  sub: string;
+  id: string;
   email: string;
   role?: Role;
   firstName?: string;
@@ -56,12 +57,15 @@ export const useAuthStore = create<AuthState>((set) => ({
     })),
   setUser: (user) => set({ user }),
 
-  logout: () => {
-    document.cookie =
-      "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    set({ user: null });
+  logout: async () => {
+    try {
+      await logoutRequest(); // ده ينادي /auth/logout
+    } catch (e) {
+      console.error("logout error", e);
+    } finally {
+      set({ user: null });
+    }
   },
-
   initUserFromCookie: () => {
     const cookies = document.cookie.split(";").map((c) => c.trim());
     const tokenCookie = cookies.find((c) => c.startsWith("access_token="));

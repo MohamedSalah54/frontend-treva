@@ -30,7 +30,7 @@ export default function TaskHeader({ createdBy, createdAt }: TaskHeaderProps) {
 
   // Dynamic profile link logic
   const profileLink =
-    user?.sub === createdBy._id ? "/profile" : `/profile/${createdBy._id}`;
+    user?.id === createdBy._id ? "/profile" : `/profile/${createdBy._id}`;
 
   return (
     <div className="flex items-center gap-3 p-4">

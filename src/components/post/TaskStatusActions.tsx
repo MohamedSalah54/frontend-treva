@@ -28,10 +28,14 @@ interface Props {
 }
 
 export default function TaskStatusActions({ task }: Props) {
+    console.log("TaskStatusActions render", task);
+
   const router = useRouter();
 
   const currentUser = useAuthStore((state) => state.user);
 
+  console.log("user is ", currentUser);
+  
   const { mutate: reviewTask, isPending: isAdminReviewPending } =
     useAdminReviewTask({
       taskId: task._id,
@@ -70,8 +74,8 @@ export default function TaskStatusActions({ task }: Props) {
   useEffect(() => {
     setUserHasTakenTask(
       task.status === "in_progress" &&
-        (task.assignedUserId?._id === currentUser?.sub ||
-          task.assignedUserId === currentUser?.sub),
+        (task.assignedUserId?._id === currentUser?.id ||
+          task.assignedUserId === currentUser?.id),
     );
   }, [task, currentUser]);
 
@@ -114,7 +118,7 @@ export default function TaskStatusActions({ task }: Props) {
   };
   const canEditStatus =
     currentUser?.role === "admin" ||
-    (currentUser?.role === "client" && task.createdBy._id === currentUser?.sub);
+    (currentUser?.role === "client" && task.createdBy._id === currentUser?.id);
 
   const [isPaidState, setIsPaidState] = useState(isPaid);
 
@@ -284,7 +288,7 @@ export default function TaskStatusActions({ task }: Props) {
     currentUser.role === "admin" ||
     (currentUser.role === "user" && task.submission?.submittedAt);
 
-  if (!currentUser || !currentUser.sub) return null;
+  if (!currentUser || !currentUser.id) return null;
 
   // const currentUserId = currentUser._id;
 
@@ -311,6 +315,13 @@ export default function TaskStatusActions({ task }: Props) {
     s: TaskStatus | ClientTaskStatus,
   ): s is ClientTaskStatus => s in CLIENT_TASK_STATUS_LABELS;
 
+  if (!currentUser) {
+  return (
+    <div className="px-4 py-3 border-t text-sm text-gray-500">
+      جاري تحميل بيانات المستخدم...
+    </div>
+  );
+}
   return (
     <div className="px-4 py-3 border-t flex flex-wrap items-center gap-2 text-sm">
       {/* ===== USER ACTIONS ===== */}

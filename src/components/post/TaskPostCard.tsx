@@ -54,7 +54,7 @@ export default function TaskPostCard({ role, data }: TaskPostCardProps) {
   const imagesToShow = requestImages?.slice(0, 2) ?? [];
 
   const profileLink = createdBy?._id
-    ? currentUser?.sub === createdBy._id
+    ? currentUser?.id === createdBy._id
       ? "/profile"
       : `/profile/${createdBy._id}`
     : undefined;
