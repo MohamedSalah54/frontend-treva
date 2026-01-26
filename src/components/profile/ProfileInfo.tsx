@@ -120,7 +120,9 @@ export default function ProfileInfo({ data }: ProfileInfoProps) {
 
       <InputRow
         icon={
-          <Image src={whatsappLogo} alt="WhatsApp" width={18} height={18} />
+          <div className="-ml-4">
+            <Image src={whatsappLogo} alt="WhatsApp" width={56} height={56} />
+          </div>
         }
         label="WhatsApp Link"
         value={form.whatsappLink || ""}
@@ -236,7 +238,7 @@ function InputRow({
 
         {/* Prefix ثابت */}
         {isWhatsapp && (
-          <span className="absolute left-10 top-1/2 -translate-y-1/2 font-bold text-gray-600 text-sm select-none">
+          <span className="absolute left-14 top-1/2 -translate-y-1/2 font-bold text-gray-600 text-sm select-none">
             https://wa.me/
           </span>
         )}

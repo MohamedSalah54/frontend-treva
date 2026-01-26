@@ -77,9 +77,8 @@ export default function ProfileView({ data }: ProfileViewProps) {
             rel="noopener noreferrer"
             className="flex items-center gap-3 p-3 rounded-xl border hover:bg-green-50 transition"
           >
-            <Image src={whatsappLogo} alt="WhatsApp" width={18} height={18} />
+            <Image src={whatsappLogo} alt="WhatsApp" width={65} height={65} />
             <div>
-              <p className="text-sm text-gray-500">واتساب</p>
               <p className="font-medium text-green-600">تواصل عبر واتساب</p>
             </div>
           </a>
