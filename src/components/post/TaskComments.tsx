@@ -286,7 +286,9 @@ export default function TaskComments({ task, role }: Props) {
       />
 
       {/* فورم إضافة كومنت + رفع صور */}
-      {isAdmin || canComment ? (
+      {/* {isAdmin || canComment ? ( */}
+
+      {isAdmin || (canComment && task.status !== "completed") ? (
         <form onSubmit={handlePostComment} className="flex flex-col gap-2 mt-3">
           <div className="flex items-center gap-2">
             {/* حقل النص */}

@@ -104,6 +104,11 @@ export type AssignedUser =
       };
     };
 
+export type SubmissionImage = {
+  original: { secure_url: string; public_id?: string; folderId?: string };
+  preview: { secure_url: string; public_id?: string; folderId?: string };
+};
+
 export interface Task {
   _id: string;
   title: string;
@@ -114,10 +119,18 @@ export interface Task {
   deadline: string;
   createdAt: string;
   assignedUserId: AssignedUser;
+  isPaid: boolean;
+  // submission?: {
+  //   submittedAt?: string;
+  //   images?: { secure_url: string; public_id?: string; folderId?: string }[];
+  // };
+  clientReview?: "yes" | "no" | null;
+
   submission?: {
-    submittedAt?: string;
-    images?: { secure_url: string; public_id?: string; folderId?: string }[];
+    images: SubmissionImage[];
+    submittedAt: Date;
   };
+
   adminReview?: {
     decision?: AdminDecision;
     reviewedAt?: string;

@@ -1,11 +1,9 @@
-
 interface TaskImagesProps {
   images?: {
     secure_url: string;
     public_id?: string;
   }[];
 }
-
 
 export default function TaskImages({ images }: TaskImagesProps) {
   if (!images || images.length === 0) return null;
@@ -27,3 +25,4 @@ export default function TaskImages({ images }: TaskImagesProps) {
     </div>
   );
 }
+

@@ -8,7 +8,6 @@ import {
   CLIENT_TASK_STATUS_LABELS,
   ClientTaskStatus,
   mapClientStatusToTaskStatus,
-  mapTaskStatusForDisplay,
   Role,
   TASK_STATUS_LABELS,
   TaskStatus,
@@ -20,7 +19,6 @@ import { useAdminReviewTask } from "@/src/hooks/tasks/admin/useAdminReviewTask";
 import { useSubmitTask } from "@/src/hooks/tasks/user/useSubmitTask";
 import { useUploadTaskImage } from "@/src/hooks/tasks/useUploadTaskImage";
 import { useAdminUpdateTask } from "@/src/hooks/tasks/admin/useAdminUpdateTask";
-import { adminUpdateTask } from "@/src/services/task/task.admin";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -28,14 +26,12 @@ interface Props {
 }
 
 export default function TaskStatusActions({ task }: Props) {
-    console.log("TaskStatusActions render", task);
 
   const router = useRouter();
 
   const currentUser = useAuthStore((state) => state.user);
 
-  console.log("user is ", currentUser);
-  
+
   const { mutate: reviewTask, isPending: isAdminReviewPending } =
     useAdminReviewTask({
       taskId: task._id,
@@ -116,9 +112,9 @@ export default function TaskStatusActions({ task }: Props) {
     rejected: "bg-red-100 text-red-700",
     edit_requested: "bg-yellow-100 text-yellow-700",
   };
-  const canEditStatus =
-    currentUser?.role === "admin" ||
-    (currentUser?.role === "client" && task.createdBy._id === currentUser?.id);
+  // const canEditStatus =
+  //   currentUser?.role === "admin" ||
+  //   (currentUser?.role === "client" && task.createdBy._id === currentUser?.id);
 
   const [isPaidState, setIsPaidState] = useState(isPaid);
 
@@ -129,31 +125,6 @@ export default function TaskStatusActions({ task }: Props) {
   if (!currentUser) return null;
 
   const { mutateAsync: uploadImage } = useUploadTaskImage();
-
-  // const handleSubmitTask = async (files: File[]) => {
-
-  //   if (!files.length) return;
-
-  //   try {
-  //     const uploadedImages: { secure_url: string; public_id: string }[] =
-  //       await Promise.all(
-  //         files.map(async (file) => {
-  //           const uploaded = await uploadImage(file);
-  //           return uploaded;
-  //         }),
-  //       );
-
-  //     submitTaskMutate(
-  //       { images: uploadedImages },
-  //       {
-  //         onSuccess: (res) => {
-  //           setUserUploadedFiles(true);
-  //         },
-  //         onError: (err) => {},
-  //       },
-  //     );
-  //   } catch (error) {}
-  // };
 
   const handleSubmitTask = async (files: File[]) => {
     if (!files.length) return;
@@ -182,25 +153,13 @@ export default function TaskStatusActions({ task }: Props) {
     } catch (error) {}
   };
 
-  // const clientStatusDisplay = () => {
-  //   if (currentUser.role === "client") {
-  //     if (taskStatusState === "completed") return "complete";
-  //     return "receive";
-  //   }
-  //   return mapTaskStatusForDisplay(taskStatusState, currentUser.role);
-  // };
-
-  // const statusDisplay = clientStatusDisplay();
   const statusDisplay =
     currentUser.role === "client"
       ? CLIENT_TASK_STATUS_LABELS[
           realStatus === "completed" ? "complete" : "receive"
         ]
-      : // : TASK_STATUS_LABELS[realStatus];
-        TASK_STATUS_LABELS[realStatus as TaskStatus];
+      : TASK_STATUS_LABELS[realStatus as TaskStatus];
 
-  // const statusClass =
-  //   statusColors[statusDisplay] || "bg-blue-100 text-blue-700";
   const statusClass = statusColors[realStatus] || "bg-gray-100 text-gray-600";
 
   const updateAdminDecision = (value: AdminDecision) => {
@@ -243,12 +202,6 @@ export default function TaskStatusActions({ task }: Props) {
     );
   };
 
-  // const updateStatus = (newStatus: ClientTaskStatus | TaskStatus) => {
-  //   const statusToSend = mapClientStatusToTaskStatus(
-  //     newStatus,
-  //     currentUser.role,
-  //     taskStatusState,
-  //   );
   const updateStatus = (newStatus: ClientTaskStatus) => {
     const statusToSend = mapClientStatusToTaskStatus(
       newStatus,
@@ -290,16 +243,6 @@ export default function TaskStatusActions({ task }: Props) {
 
   if (!currentUser || !currentUser.id) return null;
 
-  // const currentUserId = currentUser._id;
-
-  // const assignedUserId =
-  //   typeof task.assignedUserId === "string"
-  //     ? task.assignedUserId
-  //     : task.assignedUserId?._id;
-
-  // const isAssignedToUser =
-  //   Boolean(currentUserId) && assignedUserId === currentUserId;
-
   const adminDecisionText: Record<string, string> = {
     approved: "مقبول",
     rejected: "مرفوض",
@@ -316,12 +259,12 @@ export default function TaskStatusActions({ task }: Props) {
   ): s is ClientTaskStatus => s in CLIENT_TASK_STATUS_LABELS;
 
   if (!currentUser) {
-  return (
-    <div className="px-4 py-3 border-t text-sm text-gray-500">
-      جاري تحميل بيانات المستخدم...
-    </div>
-  );
-}
+    return (
+      <div className="px-4 py-3 border-t text-sm text-gray-500">
+        جاري تحميل بيانات المستخدم...
+      </div>
+    );
+  }
   return (
     <div className="px-4 py-3 border-t flex flex-wrap items-center gap-2 text-sm">
       {/* ===== USER ACTIONS ===== */}
@@ -332,13 +275,6 @@ export default function TaskStatusActions({ task }: Props) {
           {task.status === "available" && !userHasTakenTask && (
             <div className="w-full px-4">
               <button
-                // onClick={() => {
-                //   takeTask(task._id, {
-                //     onSuccess: () => {
-                //       setUserHasTakenTask(true);
-                //     },
-                //   });
-                // }}
                 onClick={() => {
                   takeTask(task._id, {
                     onSuccess: () => {
@@ -373,9 +309,7 @@ export default function TaskStatusActions({ task }: Props) {
           )}
 
           {/* Attach Files */}
-          {/* {task.status === "in_progress" &&
-            userHasTakenTask &&
-            !userUploadedFiles && ( */}
+
           {/* Attach Files */}
           {task.status === "in_progress" &&
             userHasTakenTask &&
@@ -399,19 +333,7 @@ export default function TaskStatusActions({ task }: Props) {
           {/* View Result */}
         </>
       )}
-      {/* {(currentUser.role === "user" ||
-        currentUser.role === "admin" ||
-        currentUser.role === "client") &&
-        task.submission && (
-          <div className="w-full px-4 mb-2">
-            <button
-              onClick={() => router.push(`/user/submitted/${task._id}`)}
-              className="block w-full max-w-md mx-auto py-3 rounded-xl bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition"
-            >
-              View Result
-            </button>
-          </div>
-        )} */}
+
       {task.submission && (
         <div className="w-full px-4 mb-2">
           {(currentUser.role === "admin" ||
@@ -433,7 +355,7 @@ export default function TaskStatusActions({ task }: Props) {
         className={`px-3 py-1 rounded-full flex items-center gap-2 max-w-xs truncate ${statusClass}`}
       >
         حالة المهمة: {statusDisplay}
-        {canEditStatus && (
+        {currentUser?.role === "admin" && (
           <button
             className="w-4 h-4 flex items-center justify-center ml-1"
             onClick={() =>

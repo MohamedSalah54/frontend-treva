@@ -11,6 +11,7 @@ interface CreateTaskPayload {
     folderId?: string;
   }[];
 }
+export type ClientReview = "yes" | "no";
 
 export const getClientTimeline = async (): Promise<Task[]> => {
   const res = await api.get("/task/client/timeline/client");
@@ -59,3 +60,17 @@ export const createTask = async (payload: CreateTaskPayload) => {
   return res.data.data;
 };
 
+export const postSetClientReview = async (params: {
+  id: string;
+  clientReview: ClientReview;
+}) => {
+  const { data } = await api.post(`/task/client/${params.id}/review`, {
+    clientReview: params.clientReview,
+  });
+  return data;
+};
+
+export const postCanDownload = async (id: string) => {
+  const { data } = await api.post(`/task/client/${id}/can-download`);
+  return data as { ok: true; images: any[] };
+};
